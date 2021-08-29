@@ -30,17 +30,17 @@ class FSearch extends StatefulWidget {
   /// 控制器。详见 [FSearchController]
   ///
   /// Controller.See [FSearchController] for details
-  final FSearchController controller;
+  final FSearchController? controller;
 
   /// 宽。
   ///
   /// Width
-  final double width;
+  final double? width;
 
   /// 高
   ///
   /// Height
-  final double height;
+  final double? height;
 
   /// 是否可用
   ///
@@ -50,22 +50,22 @@ class FSearch extends StatefulWidget {
   /// 当输入框被点击时会回调
   ///
   /// Callback when the input box is clicked
-  final VoidCallback onTap;
+  final VoidCallback? onTap;
 
   /// 输入内容
   ///
   /// input content
-  final String text;
+  final String? text;
 
   /// 当点击键盘搜索按钮时会回调
   ///
   /// Callback when the keyboard search button is clicked
-  final ValueChanged<String> onSearch;
+  final ValueChanged<String>? onSearch;
 
   /// 边角效果。详见 [FSearchCorner]
   ///
   /// Corner effect. See [FSearchCorner] for details
-  final FSearchCorner corner;
+  final FSearchCorner? corner;
 
   /// 边角风格。默认 [FSearchCornerStyle.round]。详见 [FSearchCornerStyle]
   ///
@@ -75,42 +75,42 @@ class FSearch extends StatefulWidget {
   /// 边框颜色
   ///
   /// stroke color
-  final Color strokeColor;
+  final Color? strokeColor;
 
   /// 边框宽
   ///
   /// stroke width
-  final double strokeWidth;
+  final double? strokeWidth;
 
   /// 背景颜色
   ///
   /// background color
-  final Color backgroundColor;
+  final Color? backgroundColor;
 
   /// 背景渐变色。会覆盖 [backgroundColor]
   ///
   /// Background gradient. Will overwrite [backgroundColor]
-  final Gradient gradient;
+  final Gradient? gradient;
 
   /// 设置组件阴影颜色
   ///
   /// Set component shadow color
-  final Color shadowColor;
+  final Color? shadowColor;
 
   /// 设置组件阴影偏移
   ///
   /// Set component shadow offset
-  final Offset shadowOffset;
+  final Offset? shadowOffset;
 
   /// 设置组件高斯与阴影形状卷积的标准偏差。
   ///
   /// Sets the standard deviation of the component's Gaussian convolution with the shadow shape.
-  final double shadowBlur;
+  final double? shadowBlur;
 
   /// 光标颜色
   ///
   /// Cursor color
-  final Color cursorColor;
+  final Color? cursorColor;
 
   /// 光标宽
   ///
@@ -125,12 +125,12 @@ class FSearch extends StatefulWidget {
   /// 前缀动作按钮
   ///
   /// Prefix action button
-  final List<Widget> prefixes;
+  final List<Widget>? prefixes;
 
   /// 后缀动作按钮
   ///
   /// Suffix action button
-  final List<Widget> suffixes;
+  final List<Widget>? suffixes;
 
   /// 实际输入区域与 [FSearch] 边缘的间距
   ///
@@ -140,22 +140,22 @@ class FSearch extends StatefulWidget {
   /// [FSearch] 的外间距
   ///
   /// [FSearch] outer spacing
-  final EdgeInsets margin;
+  final EdgeInsets? margin;
 
   /// 输入文本风格
   ///
   /// Input text style
-  final TextStyle style;
+  final TextStyle? style;
 
   /// Hint 文本风格
   ///
   /// Hint text style
-  final TextStyle hintStyle;
+  final TextStyle? hintStyle;
 
   /// Hint。如果只有一条 Hint，将无法启用 Hint 交换动画。
   ///
   /// Hint. If there is only one Hint, Hint swap animation cannot be enabled.
-  final List<String> hints;
+  final List<String>? hints;
 
   /// Hint 交换时间间隔
   ///
@@ -185,7 +185,7 @@ class FSearch extends StatefulWidget {
   /// Hint 前缀小部件
   ///
   /// Hint prefix widget
-  final Widget hintPrefix;
+  final Widget? hintPrefix;
 
   /// 是否居中。
   ///
@@ -193,7 +193,7 @@ class FSearch extends StatefulWidget {
   final bool center;
 
   FSearch({
-    Key key,
+    Key? key,
     this.text,
     this.width,
     this.height,
@@ -234,33 +234,33 @@ class FSearch extends StatefulWidget {
 }
 
 class _FSearchState extends State<FSearch> {
-  String hint_0;
-  String hint_1;
+  String? hint_0;
+  String? hint_1;
   int nextHintIndex = -1;
-  double hintSwitchTop_0;
-  double hintSwitchTop_1;
+  double? hintSwitchTop_0;
+  double? hintSwitchTop_1;
   int scrollHintCurrentIndex = 0;
-  double inputHeight;
-  double inputWidth;
-  Duration hintSwitchDuration_0;
-  Duration hintSwitchDuration_1;
+  double? inputHeight;
+  double? inputWidth;
+  Duration? hintSwitchDuration_0;
+  Duration? hintSwitchDuration_1;
 
   bool showHint = true;
 
   GlobalKey inputKey = GlobalKey();
-  TextEditingController controller;
+  late TextEditingController controller;
   bool scrollAnimPlaying = false;
-  Timer switchTimer;
+  late Timer switchTimer;
   FocusNode focusNode = FocusNode();
 
-  String get hint {
-    String r;
-    if (widget.hints != null && widget.hints.length > 0) {
+  String? get hint {
+    String? r;
+    if (widget.hints != null && widget.hints!.length > 0) {
       int index = nextHintIndex + 1;
-      if (index > -1 && index < widget.hints.length) {
-        r = widget.hints[index];
+      if (index > -1 && index < widget.hints!.length) {
+        r = widget.hints![index];
       } else {
-        r = widget.hints[0];
+        r = widget.hints![0];
       }
     }
     return r;
@@ -270,7 +270,7 @@ class _FSearchState extends State<FSearch> {
   void initState() {
     widget.controller?._state = this;
 
-    showHint = widget.hints != null && widget.hints.length > 0;
+    showHint = widget.hints != null && widget.hints!.length > 0;
     hintSwitchDuration_0 = widget.hintSwitchAnimDuration;
     hintSwitchDuration_1 = widget.hintSwitchAnimDuration;
 
@@ -281,7 +281,7 @@ class _FSearchState extends State<FSearch> {
     /// Input monitor
     controller.addListener(() {
       bool hasText = false;
-      if (controller.value.text != null && controller.value.text.length > 0) {
+      if (controller.value.text.length > 0) {
         hasText = true;
       }
       if (showHint != !hasText) {
@@ -291,21 +291,21 @@ class _FSearchState extends State<FSearch> {
               !(focusNode.hasFocus && widget.stopHintSwitchOnFocus)) {
             playHintSwitchAnim();
           } else {
-            switchTimer?.cancel();
+            switchTimer.cancel();
             tryToFixScrollAnim();
           }
         });
       }
-      widget.controller?._listener?.call();
+      widget.controller?._listener.call();
     });
 
     /// 首次初始化文字
     ///
     /// Initialize text for the first time
     if (widget.controller != null && widget.text != null) {
-      widget.controller.text = widget.text;
+      widget.controller!.text = widget.text!;
     } else if (widget.text != null) {
-      controller.text = widget.text;
+      controller.text = widget.text!;
     }
 
     /// 焦点监听
@@ -313,11 +313,11 @@ class _FSearchState extends State<FSearch> {
     /// Focus monitoring
     focusNode.addListener(() {
       if (focusNode.hasFocus && widget.stopHintSwitchOnFocus) {
-        switchTimer?.cancel();
+        switchTimer.cancel();
       } else {
         playHintSwitchAnim();
       }
-      widget.controller?._focusListener?.call(focusNode.hasFocus);
+      widget.controller?._focusListener.call(focusNode.hasFocus);
     });
     super.initState();
   }
@@ -356,8 +356,8 @@ class _FSearchState extends State<FSearch> {
     /// 添加前缀
     ///
     /// Add prefix
-    if (widget.prefixes != null && widget.prefixes.length != 0) {
-      children.addAll(widget.prefixes);
+    if (widget.prefixes != null && widget.prefixes!.length != 0) {
+      children.addAll(widget.prefixes!);
     }
 
     /// 构建输入区域
@@ -369,8 +369,8 @@ class _FSearchState extends State<FSearch> {
     /// 添加后缀
     ///
     /// Add suffix
-    if (widget.suffixes != null && widget.suffixes.length != 0) {
-      children.addAll(widget.suffixes);
+    if (widget.suffixes != null && widget.suffixes!.length != 0) {
+      children.addAll(widget.suffixes!);
     }
     return Container(
       width: widget.width,
@@ -389,20 +389,21 @@ class _FSearchState extends State<FSearch> {
 
   void initInputSize() {
 //    if (inputHeight != null) return;
-    WidgetsBinding.instance.addPostFrameCallback((timeStamp) {
+    WidgetsBinding.instance!.addPostFrameCallback((timeStamp) {
       if (!mounted) return;
-      RenderBox box = inputKey.currentContext?.findRenderObject();
+      RenderBox? box =
+          inputKey.currentContext?.findRenderObject() as RenderBox?;
       if (widget.hints != null &&
-          widget.hints.length > 1 &&
-          inputHeight != box.size.height &&
+          widget.hints!.length > 1 &&
+          inputHeight != box!.size.height &&
           inputWidth != box.size.width) {
         setState(() {
           inputHeight = box.size.height;
           inputWidth = box.size.width;
           hintSwitchTop_0 = 0;
           hintSwitchTop_1 = inputHeight;
-          hint_0 = widget.hints[0];
-          hint_1 = widget.hints[1];
+          hint_0 = widget.hints![0];
+          hint_1 = widget.hints![1];
           playHintSwitchAnim();
         });
       }
@@ -482,7 +483,7 @@ class _FSearchState extends State<FSearch> {
           children.add(hintSwitch_0);
           children.add(hintSwitch_1);
         }
-      } else if (widget.hints != null && widget.hints.length > 0) {
+      } else if (widget.hints != null && widget.hints!.length > 0) {
         children.add(buildNormalHint());
       }
     }
@@ -500,12 +501,12 @@ class _FSearchState extends State<FSearch> {
     TextStyle style = widget.style ?? buildDefaultTextStyle();
     List<Widget> children = [];
     if (widget.hintPrefix != null) {
-      children.add(widget.hintPrefix);
+      children.add(widget.hintPrefix!);
     }
     children.add(LimitedBox(
       maxWidth: inputWidth ?? 0.0,
       child: Text(
-        widget.hints[0],
+        widget.hints![0],
         style: widget.hintStyle ??
             style.copyWith(
               color: Colors.grey,
@@ -527,7 +528,7 @@ class _FSearchState extends State<FSearch> {
   AnimatedPositioned buildScrollSwitch_2() {
     TextStyle style = widget.style ?? buildDefaultTextStyle();
     Widget child = Text(
-      hint_1,
+      hint_1!,
       style: widget.hintStyle ?? style.copyWith(color: Colors.grey),
       overflow: TextOverflow.ellipsis,
     );
@@ -544,9 +545,9 @@ class _FSearchState extends State<FSearch> {
           ),
         ),
       ),
-      duration: hintSwitchDuration_1,
+      duration: hintSwitchDuration_1!,
       onEnd: () {
-        if (hintSwitchTop_1 == -inputHeight) {
+        if (hintSwitchTop_1 == -inputHeight!) {
           setState(() {
             hintSwitchTop_1 = inputHeight;
             hintSwitchDuration_1 = Duration(milliseconds: 0);
@@ -561,7 +562,7 @@ class _FSearchState extends State<FSearch> {
   Widget buildScrollSwitch_1() {
     TextStyle style = widget.style ?? buildDefaultTextStyle();
     Widget child = Text(
-      hint_0,
+      hint_0!,
       style: widget.hintStyle ?? style.copyWith(color: Colors.grey),
       overflow: TextOverflow.ellipsis,
     );
@@ -577,10 +578,10 @@ class _FSearchState extends State<FSearch> {
           ),
         ),
       ),
-      duration: hintSwitchDuration_0,
+      duration: hintSwitchDuration_0!,
       onEnd: () {
         scrollAnimPlaying = false;
-        if (hintSwitchTop_0 == -inputHeight) {
+        if (hintSwitchTop_0 == -inputHeight!) {
           setState(() {
             hintSwitchTop_0 = inputHeight;
             hintSwitchDuration_0 = Duration(milliseconds: 0);
@@ -596,7 +597,7 @@ class _FSearchState extends State<FSearch> {
     int index = nextHintIndex == -1 ? 0 : nextHintIndex;
     TextStyle style = widget.style ?? buildDefaultTextStyle();
     Widget child = Text(
-      widget.hints[index],
+      widget.hints![index],
       style: widget.hintStyle ?? style.copyWith(color: Colors.grey),
       overflow: TextOverflow.ellipsis,
     );
@@ -622,7 +623,7 @@ class _FSearchState extends State<FSearch> {
     int index = nextHintIndex == -1 ? 0 : nextHintIndex;
     TextStyle style = widget.style ?? buildDefaultTextStyle();
     Widget child = Text(
-      widget.hints[index],
+      widget.hints![index],
       style: widget.hintStyle ?? style.copyWith(color: Colors.grey),
       overflow: TextOverflow.ellipsis,
     );
@@ -645,27 +646,27 @@ class _FSearchState extends State<FSearch> {
         !showHint ||
         inputHeight == null ||
         widget.hints == null ||
-        widget.hints.length < 2) return;
-    switchTimer?.cancel();
+        widget.hints!.length < 2) return;
+    switchTimer.cancel();
     switchTimer = Timer(widget.hintSwitchDuration, () {
       if (!mounted &&
           showHint &&
           widget.hintSwitchEnable &&
           inputHeight != null) return;
-      List<String> hints = widget.hints;
+      List<String>? hints = widget.hints;
       if (widget.hintSwitchType != FSearchAnimationType.Scroll) {
         setState(() {
           nextHintIndex =
-              (nextHintIndex + 1 == hints.length ? 0 : nextHintIndex + 1);
+              (nextHintIndex + 1 == hints!.length ? 0 : nextHintIndex + 1);
         });
       } else {
         double switchHintTop(double hintTop) {
           if (hintTop == 0) {
-            hintTop = -inputHeight;
+            hintTop = -inputHeight!;
           } else if (hintTop == inputHeight) {
             hintTop = 0;
           } else {
-            hintTop = inputHeight;
+            hintTop = inputHeight!;
           }
           return hintTop;
         }
@@ -674,7 +675,7 @@ class _FSearchState extends State<FSearch> {
           scrollAnimPlaying = true;
           if (hintSwitchTop_0 == hintSwitchTop_1) tryToFixScrollAnim();
           nextHintIndex =
-              (nextHintIndex + 1 == hints.length ? 0 : nextHintIndex + 1);
+              (nextHintIndex + 1 == hints!.length ? 0 : nextHintIndex + 1);
           int nextIndex =
               (nextHintIndex + 1 == hints.length ? 0 : nextHintIndex + 1);
           if (hintSwitchTop_0 == inputHeight) {
@@ -687,11 +688,11 @@ class _FSearchState extends State<FSearch> {
           } else {
             hint_1 = hints[nextHintIndex];
           }
-          hintSwitchTop_0 = switchHintTop(hintSwitchTop_0);
+          hintSwitchTop_0 = switchHintTop(hintSwitchTop_0!);
           if (hintSwitchTop_0 == 0) {
             scrollHintCurrentIndex = 0;
           }
-          hintSwitchTop_1 = switchHintTop(hintSwitchTop_1);
+          hintSwitchTop_1 = switchHintTop(hintSwitchTop_1!);
           if (hintSwitchTop_1 == 0) {
             scrollHintCurrentIndex = 1;
           }
@@ -711,10 +712,10 @@ class _FSearchState extends State<FSearch> {
     BorderRadius borderRadius = widget.corner == null
         ? BorderRadius.all(Radius.circular(0))
         : BorderRadius.only(
-            topLeft: Radius.circular(widget.corner.leftTopCorner),
-            topRight: Radius.circular(widget.corner.rightTopCorner),
-            bottomRight: Radius.circular(widget.corner.rightBottomCorner),
-            bottomLeft: Radius.circular(widget.corner.leftBottomCorner),
+            topLeft: Radius.circular(widget.corner!.leftTopCorner),
+            topRight: Radius.circular(widget.corner!.rightTopCorner),
+            bottomRight: Radius.circular(widget.corner!.rightBottomCorner),
+            bottomLeft: Radius.circular(widget.corner!.leftBottomCorner),
           );
     Color sideColor = widget.strokeColor ?? Colors.transparent;
     BorderSide borderSide = BorderSide(
@@ -738,9 +739,9 @@ class _FSearchState extends State<FSearch> {
             ? [
                 BoxShadow(
                   color: widget.shadowColor ??
-                      widget.backgroundColor.withOpacity(opacity),
+                      widget.backgroundColor!.withOpacity(opacity),
                   offset: widget.shadowOffset ?? Offset(0, 0),
-                  blurRadius: widget.shadowBlur,
+                  blurRadius: widget.shadowBlur!,
                 )
               ]
             : null,
@@ -754,39 +755,39 @@ class _FSearchState extends State<FSearch> {
 /// The controller of [FSearch] can go back to the input text, Hint, focus status and other information.
 /// At the same time provide a variety of monitoring and text update capabilities.
 class FSearchController {
-  _FSearchState _state;
+  late _FSearchState? _state;
 
   /// 输入的文本内容
   ///
   /// input text
-  String get text => (_state?.controller?.value?.text) ?? null;
+  String? get text => (_state?.controller.value.text) ?? null;
 
   /// 主动更新输入文本
   ///
   /// Actively update input text
-  set text(String value) {
-    if (_state?.controller?.text != value) {
-      _state?.controller?.clear();
-      _state?.controller?.text = value;
-      _state?.controller?.selection =
+  set text(String? value) {
+    if (_state?.controller.text != value) {
+      _state?.controller.clear();
+      _state?.controller.text = value!;
+      _state?.controller.selection =
           TextSelection.collapsed(offset: value?.length ?? 0);
-      _listener?.call();
+      _listener.call();
     }
   }
 
   /// 当前 Hint 内容
   ///
   /// Current Hint content
-  String get hint => (_state?.hint) ?? null;
+  String? get hint => (_state?.hint) ?? null;
 
   /// 焦点状态
   ///
   /// Focus state
-  bool get focus => (_state?.focusNode?.hasFocus) ?? false;
+  bool get focus => (_state?.focusNode.hasFocus) ?? false;
 
-  ValueChanged<bool> _focusListener;
+  late ValueChanged<bool> _focusListener;
 
-  VoidCallback _listener;
+  late VoidCallback _listener;
 
   /// 设置输入监听
   ///
@@ -806,14 +807,14 @@ class FSearchController {
   ///
   /// request focus
   requestFocus() {
-    _state?.focusNode?.requestFocus();
+    _state?.focusNode.requestFocus();
   }
 
   /// 移除焦点
   ///
   /// clear focus
   clearFocus() {
-    _state?.focusNode?.unfocus();
+    _state?.focusNode.unfocus();
   }
 
   /// 销毁

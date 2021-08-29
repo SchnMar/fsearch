@@ -19,15 +19,15 @@ class MyApp extends StatefulWidget {
 }
 
 class _MyAppState extends State<MyApp> {
-  FSearchController controller1;
-  FSearchController controller2;
-  FSearchController controller3;
-  FSearchController controller4;
-  FSearchController controller5;
-  FSearchController controller6_1;
-  FSearchController controller6_2;
-  FSearchController controller6_3;
-  FSearchController controller7;
+  late FSearchController controller1;
+  late FSearchController controller2;
+  late FSearchController controller3;
+  late FSearchController controller4;
+  late FSearchController controller5;
+  late FSearchController controller6_1;
+  late FSearchController controller6_2;
+  late FSearchController controller6_3;
+  late FSearchController controller7;
 
   bool searching1 = false;
   bool searching2 = false;
@@ -263,8 +263,8 @@ class _MyAppState extends State<MyApp> {
             /// gradient
             gradient: LinearGradient(
               colors: [
-                Colors.blue[50],
-                Colors.red[50],
+                Colors.blue[50]!,
+                Colors.red[50]!,
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -439,8 +439,8 @@ class _MyAppState extends State<MyApp> {
             cursorWidth: 5.0,
             gradient: LinearGradient(
               colors: [
-                Colors.deepOrange[100],
-                Colors.amber[50],
+                Colors.deepOrange[100]!,
+                Colors.amber[50]!,
               ],
               begin: Alignment.topCenter,
               end: Alignment.bottomCenter,
@@ -625,8 +625,8 @@ class _MyAppState extends State<MyApp> {
                     corner: FButtonCorner.all(15.0),
                     effect: true,
                     gradient: LinearGradient(colors: [
-                      Colors.orange[500],
-                      Colors.orange[900],
+                      Colors.orange[500]!,
+                      Colors.orange[900]!,
                     ]),
                   ),
                   const SizedBox(width: 6.0),
@@ -755,8 +755,8 @@ class _MyAppState extends State<MyApp> {
                 cursorWidth: 3.0,
                 gradient: LinearGradient(
                   colors: [
-                    Colors.red[100],
-                    Colors.purple[50],
+                    Colors.red[100]!,
+                    Colors.purple[50]!,
                   ],
                   begin: Alignment.topCenter,
                   end: Alignment.bottomCenter,
@@ -934,9 +934,9 @@ class _MyAppState extends State<MyApp> {
 }
 
 class PageWidget extends StatefulWidget {
-  Widget child;
+  Widget? child;
   bool searching;
-  VoidCallback done;
+  VoidCallback? done;
   double width;
   double height;
 
@@ -953,14 +953,14 @@ class PageWidget extends StatefulWidget {
 }
 
 class _PageWidgetState extends State<PageWidget> {
-  Timer hideSearching;
+  late Timer hideSearching;
 
   @override
   Widget build(BuildContext context) {
     hideSearching?.cancel();
     List<Widget> children = [];
     children.add(Positioned(
-      child: widget.child,
+      child: widget.child!,
     ));
     if (widget.searching) {
       children.add(FSuper(

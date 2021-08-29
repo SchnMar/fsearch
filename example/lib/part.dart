@@ -1,4 +1,3 @@
-import 'package:ffloat/ffloat.dart';
 import 'package:flutter/material.dart';
 
 import 'color.dart';
